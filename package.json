@@ -10,7 +10,8 @@
     "watch": "webpack --mode=development --watch",
     "check": "eslint ./src",
     "fix": "eslint ./src --fix",
-    "test": "jest"
+    "test": "jest",
+    "analyze": "cross-env ANALYZE=true npm run build"
   },
   "keywords": [
     "insticator",
