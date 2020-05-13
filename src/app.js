@@ -7,7 +7,8 @@ import helmet from 'koa-helmet'
 import serve from 'koa-static'
 
 import { HttpStatus } from './helpers/HttpStatus'
-import { errorHandler } from './helpers/middlewares'
+import { logger } from './helpers/logger'
+import { errorHandler, httpLogger } from './helpers/middlewares'
 
 import { ApiModule } from './api/api.module'
 
@@ -22,6 +23,7 @@ router.get('/', (ctx) => {
 })
 
 app.use(errorHandler)
+app.use(httpLogger)
 app.use(helmet())
 app.use(body())
 app.use(serve(resolve(__dirname, '../public')))
@@ -29,5 +31,5 @@ app.use(router.routes())
 app.use(api.router.routes())
 
 app.on('error', (err, ctx) => {
-  console.error(err, ctx)
+  logger.error(err, ctx)
 })

@@ -11,7 +11,7 @@ function getMethodDescriptor(method, route, descriptor) {
 }
 
 export function Controller(prefix = '') {
-  return function () {
+  return function (Wrapped) {
     return class extends Wrapped {
       constructor (...args) {
         super(...args)
