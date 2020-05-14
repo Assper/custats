@@ -1,17 +1,31 @@
-import { promisify } from 'util'
-import { MongoClient } from 'mongodb'
+import Promise from 'bluebird'
+import { MongoClient, Collection } from 'mongodb'
 import { config } from '../config'
 
-export class DbConnector {
-  static self = null
+Promise.promisifyAll(Collection.prototype)
+Promise.promisifyAll(MongoClient)
 
-  constructor () {
-    this.client = new MongoClient(config.db)
-    this.connect = promisify(this.client.connect)
-    DbConnector.self = this
+export class DbConnector {
+  static client = null
+  static mongoConfig = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   }
 
-  static instance () {
-    return DbConnector.self || new DbConnector()
+  constructor() {
+    if (!DbConnector.client) {
+      this.client = new MongoClient(config.db.url, mongoConfig)
+      DbConnector.client = this.client
+    } else {
+      this.client = DbConnector.client
+    }
+  }
+
+  async connectTo(dbname) {
+    if (!this.client.isConnected()) {
+      await this.client.connect()
+    }
+
+    return this.client.db(dbname)
   }
 }

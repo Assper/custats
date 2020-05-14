@@ -13,10 +13,13 @@ function getMethodDescriptor(method, route, descriptor) {
 export function Controller(prefix = '') {
   return function (Wrapped) {
     return class extends Wrapped {
-      constructor (...args) {
+      constructor(...args) {
         super(...args)
         Object.getOwnPropertyNames(Wrapped.prototype).forEach((key) => {
-          const descriptor = Object.getOwnPropertyDescriptor(Wrapped.prototype, key)
+          const descriptor = Object.getOwnPropertyDescriptor(
+            Wrapped.prototype,
+            key
+          )
           if (typeof descriptor.value === 'object' && descriptor.value.route) {
             const { route, method, handler } = descriptor.value
             router[method](prefix + route, handler.bind(this))

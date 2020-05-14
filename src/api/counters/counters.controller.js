@@ -2,14 +2,16 @@ import { HttpStatus } from '../../helpers/HttpStatus'
 import { Get, Controller } from '../decorators/controller'
 
 @Controller('/counters')
-export class CountersController {
-  constructor (countersService) {
+class CountersController {
+  constructor(countersService) {
     this.countersService = countersService
   }
 
   @Get('/')
-  getAllUsers (ctx) {
+  async getAllUsersCount(ctx) {
     ctx.status = HttpStatus.Ok
-    ctx.body = this.countersService.getUsersCount()
+    ctx.body = await this.countersService.getAllUsersCount()
   }
 }
+
+export { CountersController }

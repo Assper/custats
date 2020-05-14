@@ -17,9 +17,7 @@ const colors = {
 
 export const logger = createLogger({
   levels,
-  transports: [
-    new transports.Console()
-  ],
+  transports: [new transports.Console()],
   format: format.combine(
     format.colorize({ colors }),
     format.timestamp(),
@@ -27,12 +25,13 @@ export const logger = createLogger({
   )
 })
 
-logger.error = err => {
+logger.error = (err) => {
   if (err instanceof Error) {
     logger.log({ level: 'error', message: err.stack || err })
   } else {
     try {
-      const level = err && err.code < HttpStatus.InternalError ? 'warn' : 'error'
+      const level =
+        err && err.code < HttpStatus.InternalError ? 'warn' : 'error'
       logger.log({ level, message: JSON.stringify(err, null, '\t') })
     } catch (e) {
       logger.log({ level: 'error', message: `${e.message()} - ${err}` })
