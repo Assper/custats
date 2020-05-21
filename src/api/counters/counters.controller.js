@@ -1,5 +1,6 @@
-import { HttpStatus } from '../../helpers/HttpStatus'
-import { Get, Controller } from '../decorators/controller'
+import { HttpStatus } from '../../helpers/enums'
+import { Response } from '../../helpers/response'
+import { Get, Controller, Json } from '../common/decorators/controller'
 
 @Controller('/counters')
 class CountersController {
@@ -7,10 +8,17 @@ class CountersController {
     this.countersService = countersService
   }
 
+  @Json
   @Get('/')
   async getAllUsersCount(ctx) {
+    const users = await this.countersService.getAllUsersCount()
     ctx.status = HttpStatus.Ok
-    ctx.body = await this.countersService.getAllUsersCount()
+    ctx.body = new Response()
+      .data()
+      .type('counter')
+      .id('users-counter')
+      .attributes({ quantity: users })
+      .build()
   }
 }
 

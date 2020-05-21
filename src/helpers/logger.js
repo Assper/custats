@@ -1,5 +1,5 @@
-import { createLogger, transports, format, addColors } from 'winston'
-import { HttpStatus } from './HttpStatus'
+import { createLogger, transports, format } from 'winston'
+import { HttpStatus } from './enums'
 
 const levels = {
   error: 0,

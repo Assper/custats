@@ -1,8 +1,6 @@
-import { CountersRepository } from './counters.repository'
-
 export class CountersService {
-  constructor() {
-    this.countersRepository = new CountersRepository()
+  constructor(countersRepository) {
+    this.countersRepository = countersRepository
   }
 
   getAllUsersCount() {

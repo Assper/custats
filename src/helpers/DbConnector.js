@@ -1,6 +1,5 @@
 import Promise from 'bluebird'
 import { MongoClient, Collection } from 'mongodb'
-import { config } from '../config'
 
 Promise.promisifyAll(Collection.prototype)
 Promise.promisifyAll(MongoClient)
@@ -12,9 +11,9 @@ export class DbConnector {
     useUnifiedTopology: true
   }
 
-  constructor() {
+  constructor(config) {
     if (!DbConnector.client) {
-      this.client = new MongoClient(config.db.url, mongoConfig)
+      this.client = new MongoClient(config.url, DbConnector.mongoConfig)
       DbConnector.client = this.client
     } else {
       this.client = DbConnector.client

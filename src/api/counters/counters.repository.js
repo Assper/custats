@@ -1,17 +1,13 @@
-import { Connect } from '../decorators/db'
+import { Connect } from '../common/decorators/db'
 
 @Connect
 class CountersRepository {
-  constructor () {
-    this.dbAuth = this.config.database.auth
-    this.collectUsers = this.config.collection.auth.users
-  }
-
   async getAllUsersCount() {
-    const db = await this.client.connectTo(this.dbAuth)
-    const collection = db.collection(this.collectUsers)
-    const docs = await collection.find({}).toArray()
-    return docs.length
+    const { auth } = this.config.database
+    const { users } = this.config.collection.auth
+    const db = await this.client.connectTo(auth)
+    const collection = db.collection(users)
+    return collection.estimatedDocumentCount()
   }
 }
 

@@ -6,7 +6,7 @@ import body from 'koa-body'
 import helmet from 'koa-helmet'
 import serve from 'koa-static'
 
-import { HttpStatus } from './helpers/HttpStatus'
+import { HttpStatus } from './helpers/enums'
 import { logger } from './helpers/logger'
 import { errorHandler, httpLogger } from './helpers/middlewares'
 
