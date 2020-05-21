@@ -25,5 +25,7 @@ export async function httpLogger(ctx, next) {
   let level = 'error'
   if (ctx.status < HttpStatus.InternalError) level = 'warn'
   if (ctx.status < HttpStatus.BadRequest) level = 'info'
-  logger[level](`${ctx.request.method} ${ctx.status} - ${ctx.request.url} (duration: ${end}ms)`)
+  logger[level](
+    `${ctx.request.method} ${ctx.status} - ${ctx.request.url} (duration: ${end}ms)`
+  )
 }

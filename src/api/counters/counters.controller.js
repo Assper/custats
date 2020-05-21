@@ -10,8 +10,8 @@ class CountersController {
 
   @Json
   @Get('/')
-  async getAllUsersCount(ctx) {
-    const users = await this.countersService.getAllUsersCount()
+  async countAllUsers(ctx) {
+    const users = await this.countersService.countAllUsers()
     ctx.status = HttpStatus.Ok
     ctx.body = new Response()
       .data()

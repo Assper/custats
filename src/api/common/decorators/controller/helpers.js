@@ -9,10 +9,7 @@ export function getResponseConfig() {
 
 export function setControllerRoutes(prototype, prefix, context) {
   Object.getOwnPropertyNames(prototype).forEach((key) => {
-    const descriptor = Object.getOwnPropertyDescriptor(
-      prototype,
-      key
-    )
+    const descriptor = Object.getOwnPropertyDescriptor(prototype, key)
 
     if (typeof descriptor.value === 'object' && descriptor.value.route) {
       const { route, method, handler } = descriptor.value
@@ -32,7 +29,7 @@ export function getMethodDescriptor(method, route, descriptor) {
 }
 
 export function getJsonHandler(value) {
-  return function(ctx, ...args) {
+  return function (ctx, ...args) {
     ctx.set('Content-Type', 'application/json')
     return value.call(this, ctx, ...args)
   }

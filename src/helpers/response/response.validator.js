@@ -1,7 +1,7 @@
 const errorMessages = {
   type: (type) => `Response should be an object but got ${type}`,
   invalid: 'Response should be a valid JSON object',
-  confilct: 'Response can\'t contain data and errors at the same time',
+  confilct: "Response can't contain data and errors at the same time",
   empty: 'Response should contain data or errors object'
 }
 

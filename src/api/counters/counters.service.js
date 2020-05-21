@@ -3,7 +3,7 @@ export class CountersService {
     this.countersRepository = countersRepository
   }
 
-  getAllUsersCount() {
-    return this.countersRepository.getAllUsersCount()
+  countAllUsers() {
+    return this.countersRepository.countAllUsers()
   }
 }

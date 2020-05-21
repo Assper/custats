@@ -2,7 +2,7 @@ import { Connect } from '../common/decorators/db'
 
 @Connect
 class CountersRepository {
-  async getAllUsersCount() {
+  async countAllUsers() {
     const { auth } = this.config.database
     const { users } = this.config.collection.auth
     const db = await this.client.connectTo(auth)

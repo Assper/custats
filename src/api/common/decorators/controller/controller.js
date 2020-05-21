@@ -1,5 +1,10 @@
 import { Response } from '../../../../helpers/response'
-import { getMethodDescriptor, getResponseConfig, getJsonHandler, setControllerRoutes } from './helpers'
+import {
+  getMethodDescriptor,
+  getResponseConfig,
+  getJsonHandler,
+  setControllerRoutes
+} from './helpers'
 
 export function Controller(prefix = '') {
   return (Wrapped) =>
