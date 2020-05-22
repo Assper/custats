@@ -4,11 +4,19 @@ export const config = {
   db: {
     url: process.env.MONGO_DB,
     database: {
-      auth: 'auth'
+      auth: 'auth',
+      comments: 'comments',
+      integrations: 'integrations'
     },
     collection: {
       auth: {
         users: 'users'
+      },
+      comments: {
+        authors: 'authors'
+      },
+      integrations: {
+        integrations: 'integrations'
       }
     }
   }
