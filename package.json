@@ -23,6 +23,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.13",
     "bluebird": "^3.7.2",
+    "class-validator": "^0.12.2",
     "core-js": "^3.6.5",
     "dotenv": "^8.2.0",
     "koa": "^2.11.0",
@@ -34,7 +35,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router": "^5.1.2",
-    "validator": "^13.0.0",
+    "uuid": "^8.1.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {

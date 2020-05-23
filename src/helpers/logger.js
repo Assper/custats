@@ -30,9 +30,13 @@ logger.error = (err) => {
     logger.log({ level: 'error', message: err.stack || err })
   } else {
     try {
-      const level =
-        err && err.code < HttpStatus.InternalError ? 'warn' : 'error'
-      logger.log({ level, message: JSON.stringify(err, null, '\t') })
+      let level = 'error'
+      if (Array.isArray(err.errors) && err.errors.length) {
+        const isInternalError = err.errors[0].status >= HttpStatus.InternalError
+        level = isInternalError ? 'error' : 'warn'
+      }
+
+      logger.log({ level, message: JSON.stringify(err, null, '  ') })
     } catch (e) {
       logger.log({ level: 'error', message: `${e.message()} - ${err}` })
     }

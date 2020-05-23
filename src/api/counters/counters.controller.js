@@ -1,7 +1,7 @@
 import { HttpStatus } from '../../helpers/enums'
-import { Response } from '../../helpers/response'
 import { Get, Controller, Json } from '../common/decorators/controller'
 import { CountUsersFilterDto } from './dto/count-users-filter.dto'
+import { CountersResponse } from './helpers/counters-response'
 
 @Controller('/counters')
 class CountersController {
@@ -14,12 +14,7 @@ class CountersController {
   async countAllUsers(ctx) {
     const users = await this.countersService.countAllUsers()
     ctx.status = HttpStatus.Ok
-    ctx.body = new Response()
-      .data()
-      .type('counter')
-      .id('all-users-counter')
-      .attributes({ quantity: users })
-      .build()
+    ctx.body = CountersResponse.getUsersCount('all-users-counter', users)
   }
 
   @Json
@@ -28,12 +23,7 @@ class CountersController {
     const countUsersFilterDto = new CountUsersFilterDto(ctx.query)
     const users = await this.countersService.countUsers(countUsersFilterDto)
     ctx.status = HttpStatus.Ok
-    ctx.body = new Response()
-      .data()
-      .type('counter')
-      .id('users-counter')
-      .attributes({ quantity: users })
-      .build()
+    ctx.body = CountersResponse.getUsersCount('users-counter', users)
   }
 }
 

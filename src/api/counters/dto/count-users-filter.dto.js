@@ -1,4 +1,5 @@
-import { IsArray, IsBoolean, Validated } from '../../common/decorators/validation'
+import { IsArray, IsBoolean } from 'class-validator'
+import { Validated } from '../../common/decorators/validation'
 
 @Validated
 class CountUsersFilterDto {
@@ -10,7 +11,7 @@ class CountUsersFilterDto {
 
   constructor(params) {
     this.integrationsNames = params.integrationsNames || []
-    this.integrationsPublisherOnly = params.integrationsPublisherOnly || false
+    this.integrationsPublisherOnly = params.integrationsPublisherOnly === 'true'
   }
 }
 

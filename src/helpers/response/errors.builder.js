@@ -7,8 +7,8 @@ export class ErrorsBuilder extends AbstractBuilder {
     this.errors = this.response.errors
   }
 
-  push(error) {
-    this.errors.push(error)
+  push(...errors) {
+    this.errors.push(...errors)
     return this
   }
 }

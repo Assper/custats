@@ -6,13 +6,22 @@ export async function errorHandler(ctx, next) {
   try {
     await next()
   } catch (err) {
-    const response = new Response()
-      .errors()
-      .push({ title: ErrorTitle.InternalError })
-      .build()
+    let status
+    let response
+
+    if (Array.isArray(err.errors) && err.errors.length) {
+      status = err.errors[0].status || HttpStatus.InternalError
+      response = err
+    } else {
+      status = HttpStatus.InternalError
+      response = new Response()
+        .errors()
+        .push({ title: ErrorTitle.InternalError, status })
+        .build()
+    }
 
     ctx.set('Content-Type', 'application/json')
-    ctx.status = HttpStatus.InternalError
+    ctx.status = status
     ctx.body = response
     ctx.app.emit('error', err, ctx)
   }

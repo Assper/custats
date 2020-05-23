@@ -10,11 +10,19 @@ class CountersRepository {
 
   async getIntegrations({ names, publisherOnly }) {
     const filters = {}
-    if (names && names.length) { filters.name = { $in: names } }
-    if (publisherOnly) { filters.publisherId = { $exists: true } }
+    if (names && names.length) {
+      filters.name = { $in: names }
+    }
+    if (publisherOnly) {
+      filters.publisherId = { $exists: true }
+    }
 
     const { database, collection } = this.config
-    return this.getArrayOfDocs(database.integrations, collection.integrations.integrations, filters)
+    return this.getArrayOfDocs(
+      database.integrations,
+      collection.integrations.integrations,
+      filters
+    )
   }
 
   async getAuthors({ integrationsIds }) {
@@ -24,7 +32,11 @@ class CountersRepository {
     }
 
     const { database, collection } = this.config
-    return this.getArrayOfDocs(database.comments, collection.comments.authors, filters)
+    return this.getArrayOfDocs(
+      database.comments,
+      collection.comments.authors,
+      filters
+    )
   }
 
   async countAllUsers() {
@@ -36,8 +48,12 @@ class CountersRepository {
 
   async countUsers(filters) {
     const { database, collection } = this.config
-    const integrationsIds = (await this.getIntegrations(filters.integrations)).map(({ uuid }) => uuid)
-    const authorsIds = (await this.getAuthors({ integrationsIds })).map(({ authorId }) => authorId)
+    const integrationsIds = (
+      await this.getIntegrations(filters.integrations)
+    ).map(({ uuid }) => uuid)
+    const authorsIds = (await this.getAuthors({ integrationsIds })).map(
+      ({ authorId }) => authorId
+    )
 
     const db = await this.client.connectTo(database.auth)
     const coll = db.collection(collection.auth.users)

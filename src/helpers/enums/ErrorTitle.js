@@ -1,3 +1,4 @@
 export const ErrorTitle = Object.freeze({
-  InternalError: 'Internal Error'
+  InternalError: 'Internal Error',
+  BadRequest: 'Bad Request'
 })
