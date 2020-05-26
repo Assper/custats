@@ -1,7 +1,9 @@
 import { HttpStatus } from '../../helpers/enums'
 import { Get, Controller, Json } from '../common/decorators/controller'
+import { CommonResponse } from '../common/common-response'
 import { CountUsersFilterDto } from './dto/count-users-filter.dto'
 import { CountersResponse } from './helpers/counters-response'
+import { getObjectFromBase64OrReject } from './helpers/utils'
 
 @Controller('/counters')
 class CountersController {
@@ -20,7 +22,13 @@ class CountersController {
   @Json
   @Get('/users')
   async countUsers(ctx) {
-    const countUsersFilterDto = new CountUsersFilterDto(ctx.query)
+    const { filters: base64 } = ctx.query
+    const filters =
+      base64 &&
+      getObjectFromBase64OrReject(base64, CommonResponse.badRequest, [
+        'Filters param should be valid'
+      ])
+    const countUsersFilterDto = new CountUsersFilterDto(filters)
     const users = await this.countersService.countUsers(countUsersFilterDto)
     ctx.status = HttpStatus.Ok
     ctx.body = CountersResponse.getUsersCount('users-counter', users)

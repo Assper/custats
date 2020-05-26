@@ -8,13 +8,6 @@ export class CountersService {
   }
 
   countUsers(countUsersFilterDto) {
-    const filters = {
-      integrations: {
-        names: countUsersFilterDto.integrationsNames,
-        publisherOnly: countUsersFilterDto.integrationsPublisherOnly
-      }
-    }
-
-    return this.countersRepository.countUsers(filters)
+    return this.countersRepository.countUsers({ ...countUsersFilterDto })
   }
 }

@@ -1,17 +1,20 @@
-import { IsArray, IsBoolean } from 'class-validator'
-import { Validated } from '../../common/decorators/validation'
+import { IsBoolean } from 'class-validator'
+import {
+  Validated,
+  IsIntegrationsFilter
+} from '../../common/decorators/validation'
 
 @Validated
 class CountUsersFilterDto {
-  @IsArray({ message: 'integrationsNames should be an array' })
-  integrationsNames
+  @IsIntegrationsFilter({ message: 'Integrations filter should be valid' })
+  integrations
 
-  @IsBoolean({ message: 'integrationsPublisherOnly should be boolean' })
-  integrationsPublisherOnly
+  @IsBoolean({ message: 'imported should be boolean' })
+  imported
 
-  constructor(params) {
-    this.integrationsNames = params.integrationsNames || []
-    this.integrationsPublisherOnly = params.integrationsPublisherOnly === 'true'
+  constructor(params = {}) {
+    this.integrations = params.integrations || {}
+    this.imported = params.imported === 'true'
   }
 }
 
