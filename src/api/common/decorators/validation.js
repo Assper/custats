@@ -2,6 +2,7 @@ import {
   validateSync,
   isBoolean,
   isArray,
+  isDateString,
   registerDecorator
 } from 'class-validator'
 import { CommonResponse } from '../../common/common-response'
@@ -38,6 +39,26 @@ export function IsIntegrationsFilter(validationOptions) {
             (typeof value.publisher === 'undefined' ||
               isBoolean(value.publisher)) &&
             (typeof value.names === 'undefined' || isArray(value.names))
+          )
+        }
+      }
+    })
+  }
+}
+
+export function IsDateRangeFilter(validationOptions) {
+  return function (object, propertyName) {
+    registerDecorator({
+      name: 'isDateFilter',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      validator: {
+        validate(value) {
+          return (
+            typeof value === 'object' &&
+            (typeof value.from === 'undefined' || isDateString(value.from)) &&
+            (typeof value.to === 'undefined' || isDateString(value.to))
           )
         }
       }

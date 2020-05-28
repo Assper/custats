@@ -10,16 +10,19 @@ class CountersRepository extends CommonQuery {
 
   async countUsers(filters) {
     const { database, collection } = this.config
-    const integrationsIds = (
-      await this.getIntegrationsIds(filters.integrations)
-    ).map(({ uuid }) => uuid)
-    const authorsIds = (await this.getAuthorsIds({ integrationsIds })).map(
-      ({ authorId }) => authorId
-    )
+    const integrationsIds = await this.getIntegrationsIds(filters.integrations)
+    const authorsIds = await this.getAuthorsIds({ integrationsIds })
 
     const filter = { uuid: { $in: authorsIds } }
     if (filters.imported) {
       filter.disqusUsername = { $exists: true, $ne: '' }
+    }
+
+    const { date } = filters
+    if (date && Object.keys(date).length) {
+      filter.signUpDate = {}
+      if (date.from) filter.signUpDate.$gte = date.from
+      if (date.to) filter.signUpDate.$lte = date.to
     }
 
     const db = await this.client.connectTo(database.auth)

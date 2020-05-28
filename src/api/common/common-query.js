@@ -1,3 +1,4 @@
+import escapeRegexp from 'escape-string-regexp'
 import { Connect } from './decorators/db'
 
 @Connect
@@ -11,19 +12,19 @@ class CommonQuery {
   async getIntegrationsIds({ names, publisher }) {
     const filters = {}
     if (names && names.length) {
-      filters.name = { $in: names.map((name) => new RegExp(name, 'i')) }
+      const escapedNames = names.map(
+        (name) => new RegExp(escapeRegexp(name), 'i')
+      )
+      filters.name = { $in: escapedNames }
     }
     if (publisher) {
       filters.publisherId = { $exists: true, $ne: '' }
     }
 
     const { database, collection } = this.config
-    return this.getArrayOfDocs({
-      dbname: database.integrations,
-      collection: collection.integrations.integrations,
-      projection: { uuid: 1, _id: 0 },
-      filters
-    })
+    const db = await this.client.connectTo(database.integrations)
+    const coll = db.collection(collection.integrations.integrations)
+    return coll.distinct('uuid', filters)
   }
 
   async getAuthorsIds({ integrationsIds }) {
@@ -33,12 +34,9 @@ class CommonQuery {
     }
 
     const { database, collection } = this.config
-    return this.getArrayOfDocs({
-      dbname: database.comments,
-      collection: collection.comments.authors,
-      projection: { authorId: 1, _id: 0 },
-      filters
-    })
+    const db = await this.client.connectTo(database.comments)
+    const coll = db.collection(collection.comments.authors)
+    return coll.distinct('authorId', filters)
   }
 }
 
