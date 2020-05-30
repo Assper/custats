@@ -16,7 +16,7 @@ export const app = new Koa()
 const router = new Router()
 const api = new ApiModule()
 
-router.get('/', (ctx) => {
+router.get('*', (ctx) => {
   ctx.status = HttpStatus.Ok
   ctx.type = 'html'
   ctx.body = createReadStream(resolve(__dirname, '../public/index.html'))
@@ -27,8 +27,8 @@ app.use(httpLogger)
 app.use(helmet())
 app.use(body())
 app.use(serve(resolve(__dirname, '../public')))
-app.use(router.routes())
 app.use(api.router.routes())
+app.use(router.routes())
 
 app.on('error', (err, ctx) => {
   logger.error(err, ctx)

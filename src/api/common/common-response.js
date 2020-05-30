@@ -13,6 +13,16 @@ export class CommonResponse {
     return new Response().errors().push(error).build()
   }
 
+  static notFound() {
+    const error = {
+      id: 'not-found',
+      title: ErrorTitle.NotFound,
+      status: HttpStatus.NotFound
+    }
+
+    return new Response().errors().push(error).build()
+  }
+
   static badRequest(...details) {
     const errors = details.map((detail) => ({
       id: uuidv1(),
