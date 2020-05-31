@@ -7,7 +7,7 @@ export class ApiModule {
   constructor(config) {
     this.config = config
     this.router = router
-    this.counters = new CountersModule()
+    this.counters = new CountersModule(config)
 
     this.router.all('*', this.notFoundHandler)
   }
