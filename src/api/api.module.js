@@ -12,7 +12,7 @@ export class ApiModule {
     this.router.all('*', this.notFoundHandler)
   }
 
-  notFoundHandler (ctx) {
+  notFoundHandler(ctx) {
     ctx.status = HttpStatus.NotFound
     ctx.body = CommonResponse.notFound()
   }
