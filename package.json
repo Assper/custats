@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node -r dotenv/config ./dist/index.js",
-    "build": "webpack --mode=production",
+    "build": "cross-env NODE_ENV=production webpack --mode=production",
     "dev": "nodemon -r dotenv/config ./dist/index.js",
     "watch": "webpack --mode=development --watch",
     "check": "eslint ./src",
@@ -22,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.13",
+    "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "class-validator": "^0.12.2",
@@ -48,6 +49,7 @@
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-regenerator": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",

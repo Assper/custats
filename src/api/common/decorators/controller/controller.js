@@ -1,4 +1,4 @@
-import { Response } from '../../../../helpers/response'
+import { Response } from '@/helpers/response'
 import {
   getMethodDescriptor,
   getResponseConfig,

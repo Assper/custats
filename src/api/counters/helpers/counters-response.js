@@ -1,4 +1,4 @@
-import { Response } from '../../../helpers/response'
+import { Response } from '@/helpers/response'
 import { CommonResponse } from '../../common/common-response'
 
 export class CountersResponse extends CommonResponse {

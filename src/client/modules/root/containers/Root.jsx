@@ -1,13 +1,11 @@
-import React from 'react'
-import { Container  } from '@material-ui/core'
-
+import React, { Fragment } from 'react'
 import { Menu } from '../components/Menu'
 
 export function Root({ children }) {
   return (
-    <Container>
+    <Fragment>
       <Menu />
       {children}
-    </Container>
+    </Fragment>
   )
 }

@@ -1,1 +1,1 @@
-export * from './containers/Counters'
+export { Counters as default } from './Counters'

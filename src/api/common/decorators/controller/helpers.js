@@ -1,5 +1,5 @@
-import { config } from '../../../../config'
-import { router } from '../../../router'
+import { config } from '@/config'
+import { router } from '@/api/router'
 
 export function getResponseConfig() {
   return {

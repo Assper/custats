@@ -13,11 +13,16 @@ if (analyze) plugins.push(new BundleAnalyzerPlugin())
 const client = {
   entry,
   output: {
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.chunk.js',
     path: public,
-    filename: 'bundle.js'
+    publicPath: '/'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      '@': path.resolve(__dirname, '../src/client')
+    }
   },
   module: {
     rules: [

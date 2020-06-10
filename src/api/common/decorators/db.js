@@ -1,4 +1,4 @@
-import { DbConnector } from '../../../helpers/DbConnector'
+import { DbConnector } from '@/helpers/DbConnector'
 
 export function Connect(Repository) {
   return class extends Repository {

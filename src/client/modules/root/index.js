@@ -1,1 +1,1 @@
-export * from './containers/Root'
+export { Root as default } from './containers/Root'
