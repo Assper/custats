@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { Menu } from '../components/Menu'
+
+const theme = createMuiTheme()
 
 export function Root({ children }) {
   return (
-    <Fragment>
+    <ThemeProvider theme={theme}>
       <Menu />
       {children}
-    </Fragment>
+    </ThemeProvider>
   )
 }

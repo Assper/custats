@@ -6,9 +6,9 @@ import {
   Redirect
 } from 'react-router-dom'
 
-import Root from '../modules/root'
-const Auth = lazy(() => import('../modules/auth'))
-const Counters = lazy(() => import('../modules/counters'))
+import Root from '../../modules/root'
+const Auth = lazy(() => import('../../modules/auth'))
+const Counters = lazy(() => import('../../modules/counters'))
 
 export function Page() {
   return (

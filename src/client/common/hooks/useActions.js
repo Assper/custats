@@ -7,7 +7,7 @@ export function useActions(actions, deps) {
   return useMemo(
     () =>
       Array.isArray(actions)
-        ? actions.map((a) => bindActionCreators(a, dispatch))
+        ? actions.map((action) => bindActionCreators(action, dispatch))
         : bindActionCreators(actions, dispatch),
     deps ? [dispatch, ...deps] : [dispatch]
   )

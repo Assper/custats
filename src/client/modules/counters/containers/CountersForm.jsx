@@ -1,35 +1,24 @@
 import React from 'react'
-import { FormControl } from '@material-ui/core'
+import { FormControl, Typography } from '@material-ui/core'
+import { useSelector } from 'react-redux'
 
-import { withModel } from '@/common/hocs/withModel'
-import { withReducer } from '@/common/hocs/withReducer'
+import { useActions } from '@/common/hooks/useActions'
+import { useModel } from '@/common/hooks/useModel'
 
+import { NAME } from '../reducer'
+import * as countersActions from '../reducer/actions'
 import { AddItemField } from '../components/AddItemField'
-import * as actions from '../reducer/actions'
+import { CountersModel } from '../models/CountersModel'
 
-class Model {
-  constructor({ actions, state, ...props }) {
-    this.props = props
-    this.actions = actions
-    this.state = state
-  }
+export function CountersForm(props = {}) {
+  const state = useSelector(state => state)
+  const actions = useActions(countersActions)
+  const model = useModel(CountersModel, [{ ...props, state, actions }])
 
-  addIntegration(value) {
-    console.log(this.props)
-    console.log(this.actions)
-    console.log(this.state)
-    console.log(value)
-  }
-}
-
-// @withReducer(actions)
-// @withModel(Model)
-function Form({ model }) {
   return (
     <FormControl>
+      <Typography variant="h2">{state[NAME].usersCount}</Typography>
       <AddItemField onItemAdd={(input) => model.addIntegration(input.value)} />
     </FormControl>
   )
 }
-
-export const CountersForm = withReducer(actions)(withModel(Model)(Form))
