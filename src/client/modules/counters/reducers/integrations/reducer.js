@@ -1,16 +1,15 @@
 import { types } from './constants'
 
 const initialState = {
-  name: '',
-  usersCount: 0
+  integrations: []
 }
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
-    case types.GET_USERS_COUNT:
+    case types.SET_INTEGRATIONS:
       return {
         ...state,
-        usersCount: action.payload
+        integrations: action.payload
       }
 
     default:

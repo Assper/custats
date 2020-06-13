@@ -1,0 +1,6 @@
+export const NAME = 'COUNTERS_REDUCER'
+
+export const types = {
+  SET_USERS_COUNT: `${NAME}_SET_USERS_COUNT`,
+  SET_ALL_USERS_COUNT: `${NAME}_SET_ALL_USERS_COUNT`
+}

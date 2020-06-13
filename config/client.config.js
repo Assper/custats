@@ -21,7 +21,7 @@ const client = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@': path.resolve(__dirname, '../src/client')
+      '@': path.resolve(__dirname, '../src')
     }
   },
   module: {
