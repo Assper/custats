@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FormControl, Typography, CircularProgress } from '@material-ui/core'
+import { Typography, CircularProgress } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 
 import { useActions } from '@/client/common/hooks/useActions'
@@ -37,16 +37,19 @@ export function CountersForm(props = {}) {
   // }, [])
 
   return (
-    <FormControl>
+    <form>
       {allUsers.isFetching && <CircularProgress />}
       {!allUsers.isFetching && <Typography type="h3">{allUsers.count}</Typography>}
       {allUsers.error && <Typography type="h3" color="error">{allUsers.error}</Typography>}
       <AddItemField onItemAdd={(input) => intsModel.add(input.value)} />
       <IntegrationsList
-        names={integrations}
+        integrations={integrations}
         onEdit={(_, i) => intsModel.edit(i)}
         onDelete={(_, i) => intsModel.delete(i)}
+        onSelect={({ isSelected }, i) => intsModel.select(!isSelected, i)}
+        onCancel={(_, i) => intsModel.editCancel(i)}
+        onConfirm={({ name }, i) => intsModel.editConfirm(name, i)}
       />
-    </FormControl>
+    </form>
   )
 }
