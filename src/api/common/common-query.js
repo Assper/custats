@@ -3,10 +3,10 @@ import { Connect } from './decorators/db'
 
 @Connect
 class CommonQuery {
-  async getArrayOfDocs({ dbname, collection, filters, projection }) {
+  async getArrayOfDocs({ dbname, collection, filters, options }) {
     const db = await this.client.connectTo(dbname)
     const coll = db.collection(collection)
-    return coll.find(filters, { projection }).toArray()
+    return coll.find(filters, options).toArray()
   }
 
   async getIntegrationsIds({ names, publisher }) {

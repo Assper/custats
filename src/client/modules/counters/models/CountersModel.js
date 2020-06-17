@@ -2,10 +2,12 @@ import { encode } from 'querystring'
 import axios from 'axios'
 
 import { Model } from '@/client/common/decorators/model'
+import { StorageManager } from '../helpers/StorageManager'
 
 @Model
 class CountersModel {
   constructor() {
+    this.storage = new StorageManager()
     this.endpoint = '/api/counters/users'
   }
 
@@ -25,11 +27,18 @@ class CountersModel {
   }
 
   async getAllUsersCount() {
+    const count = this.storage.getAllUsersCount()
+    if (count) {
+      this.actions.setAllUsersCount({ isFetching: false, count })
+      return
+    }
+
     this.actions.setAllUsersCount({ isFetching: true, error: '' })
     try {
       const response = await axios.get(`${this.endpoint}/all`)
       const count = response.data.data.attributes.quantity
       this.actions.setAllUsersCount({ isFetching: false, count })
+      this.storage.setAllUsersCount(count)
     } catch (error) {
       this.actions.setAllUsersCount({
         isFetching: false,

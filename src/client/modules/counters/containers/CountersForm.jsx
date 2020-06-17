@@ -32,9 +32,10 @@ export function CountersForm(props = {}) {
   const { allUsers } = state[COUNTERS_NAME]
   const { integrations } = state[INTEGRATIONS_NAME]
 
-  // useEffect(() => {
-  //   countersModel.getAllUsersCount()
-  // }, [])
+  useEffect(() => {
+    intsModel.getIntegrations()
+    countsModel.getAllUsersCount()
+  }, [])
 
   return (
     <form>

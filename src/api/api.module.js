@@ -2,12 +2,14 @@ import { HttpStatus } from '../helpers/enums'
 import { router } from './router'
 import { CommonResponse } from './common/common-response'
 import { CountersModule } from './counters/counters.module'
+import { StreamModule } from './stream/stream.module'
 
 export class ApiModule {
   constructor(config) {
     this.config = config
     this.router = router
     this.counters = new CountersModule(config)
+    this.stream = new StreamModule(config)
 
     this.router.all('*', this.notFoundHandler)
   }
