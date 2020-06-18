@@ -2,12 +2,11 @@ import { encode } from 'querystring'
 import axios from 'axios'
 
 import { Model } from '@/client/common/decorators/model'
-import { StorageManager } from '../helpers/StorageManager'
 
 @Model
 class CountersModel {
-  constructor() {
-    this.storage = new StorageManager()
+  constructor(storage) {
+    this.storage = storage
     this.endpoint = '/api/counters/users'
   }
 

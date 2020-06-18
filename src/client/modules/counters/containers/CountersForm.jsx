@@ -8,26 +8,38 @@ import { useModel } from '@/client/common/hooks/useModel'
 import { NAME as COUNTERS_NAME, actions as countersActions } from '../reducers/counters'
 import { NAME as INTEGRATIONS_NAME, actions as integrationsActions } from '../reducers/integrations'
 
+import { StorageManager } from '../helpers/StorageManager'
+import { IntegrationsValidator } from '../helpers/IntegrationsValidator'
 import { CountersModel } from '../models/CountersModel'
-import { IntegrationsListModel } from '../models/IntgretionslistModel'
+import { IntegrationsModel } from '../models/IntgretionsModel'
 import { AddItemField } from '../components/AddItemField'
 import { IntegrationsList } from '../components/IntegrationsList'
+
+const storage = new StorageManager()
+const validator = new IntegrationsValidator()
 
 export function CountersForm(props = {}) {
   const state = useSelector(state => state)
   const countsActions = useActions(countersActions)
   const intsActions = useActions(integrationsActions)
-  const countsModel = useModel(CountersModel, [{
-    ...props,
-    state: state[COUNTERS_NAME],
-    actions: countsActions
-  }])
+  const countsModel = useModel(CountersModel, [
+    {
+      ...props,
+      state: state[COUNTERS_NAME],
+      actions: countsActions
+    },
+    storage
+  ])
 
-  const intsModel = useModel(IntegrationsListModel, [{
-    ...props,
-    state: state[INTEGRATIONS_NAME],
-    actions: intsActions
-  }])
+  const intsModel = useModel(IntegrationsModel, [
+    {
+      ...props,
+      state: state[INTEGRATIONS_NAME],
+      actions: intsActions
+    },
+    storage,
+    validator
+  ])
 
   const { allUsers } = state[COUNTERS_NAME]
   const { integrations } = state[INTEGRATIONS_NAME]
@@ -38,7 +50,7 @@ export function CountersForm(props = {}) {
   }, [])
 
   return (
-    <form>
+    <form onSubmit={(e) => e.preventDefault()}>
       {allUsers.isFetching && <CircularProgress />}
       {!allUsers.isFetching && <Typography type="h3">{allUsers.count}</Typography>}
       {allUsers.error && <Typography type="h3" color="error">{allUsers.error}</Typography>}

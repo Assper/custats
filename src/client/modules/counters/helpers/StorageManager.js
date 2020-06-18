@@ -49,6 +49,6 @@ export class StorageManager {
   pushIntegration(integration) {
     const integrations = JSON.parse(this.getIntegrations())
     integrations.push(integration)
-    this.addIntegrations(integrations)
+    this.setIntegrations(integrations)
   }
 }

@@ -1,16 +1,14 @@
 import { Model } from '@/client/common/decorators/model'
-import { IntegrationsValidator } from '../helpers/IntegrationsValidator'
-import { StorageManager } from '../helpers/StorageManager'
 
 @Model
-class IntegrationsListModel {
-  constructor() {
-    this.storage = new StorageManager()
+class IntegrationsModel {
+  constructor(storage, validator) {
+    this.storage = storage
+    this.validator = validator
   }
 
   add(name) {
-    const validator = new IntegrationsValidator(this.state.integrations)
-    const error = validator.validateName(name)
+    const error = this.validator.validateName(name, this.state.integrations)
     if (error) return console.error(error)
 
     const data = { name, isEditing: false, isSelected: false }
@@ -34,8 +32,7 @@ class IntegrationsListModel {
   }
 
   editConfirm(name, index) {
-    const validator = new IntegrationsValidator(this.state.integrations)
-    const error = validator.validateName(name)
+    const error = this.validator.validateName(name, this.state.integrations)
     if (error) return console.error(error)
 
     const integrations = [...this.state.integrations]
@@ -76,4 +73,4 @@ class IntegrationsListModel {
   }
 }
 
-export { IntegrationsListModel }
+export { IntegrationsModel }
