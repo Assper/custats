@@ -1,7 +1,9 @@
 export class StorageManager {
   static keys = Object.freeze({
     allUsersCount: 'allUsersCount',
-    integrations: 'integrations'
+    usersCount: 'usersCount',
+    integrations: 'integrations',
+    filters: 'filters'
   })
 
   callLocalStorage(method, key, data) {
@@ -22,6 +24,18 @@ export class StorageManager {
 
   getAllUsersCount() {
     return this.callLocalStorage('getItem', StorageManager.keys.allUsersCount)
+  }
+
+  setUsersCount(count) {
+    this.callLocalStorage('setItem', StorageManager.keys.usersCount, count)
+  }
+
+  clearUsersCount() {
+    this.callLocalStorage('removeItem', StorageManager.keys.usersCount)
+  }
+
+  getUsersCount() {
+    return this.callLocalStorage('getItem', StorageManager.keys.usersCount)
   }
 
   setIntegrations(integrations) {
@@ -50,5 +64,24 @@ export class StorageManager {
     const integrations = JSON.parse(this.getIntegrations())
     integrations.push(integration)
     this.setIntegrations(integrations)
+  }
+
+  getFilters() {
+    try {
+      const json = this.callLocalStorage('getItem', StorageManager.keys.filters)
+      return JSON.parse(json)
+    } catch (err) {
+      console.error(err)
+      this.clearFilters()
+    }
+  }
+
+  clearFilters() {
+    this.callLocalStorage('removeItem', StorageManager.keys.filters)
+  }
+
+  setFilters(filters) {
+    const json = JSON.stringify(filters)
+    this.callLocalStorage('setItem', StorageManager.keys.filters, json)
   }
 }

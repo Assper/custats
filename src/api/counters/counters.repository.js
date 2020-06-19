@@ -8,17 +8,19 @@ class CountersRepository extends CommonQuery {
     return coll.estimatedDocumentCount()
   }
 
-  async countUsers(filters) {
+  async countUsers({ integrations, imported, publisher, date }) {
     const { database, collection } = this.config
-    const integrationsIds = await this.getIntegrationsIds(filters.integrations)
+    const integrationsIds = await this.getIntegrationsIds({
+      names: integrations,
+      publisher
+    })
     const authorsIds = await this.getAuthorsIds({ integrationsIds })
 
     const filter = { uuid: { $in: authorsIds } }
-    if (filters.imported) {
-      filter.disqusUsername = { $exists: true, $ne: '' }
+    if (imported) {
+      filter.disqusUsername = { $and: [{ $ne: '' }, { $ne: null }] }
     }
 
-    const { date } = filters
     if (date && Object.keys(date).length) {
       filter.signUpDate = {}
       if (date.from) filter.signUpDate.$gte = date.from

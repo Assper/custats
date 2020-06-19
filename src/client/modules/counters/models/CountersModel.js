@@ -1,4 +1,3 @@
-import { encode } from 'querystring'
 import axios from 'axios'
 
 import { Model } from '@/client/common/decorators/model'
@@ -10,17 +9,34 @@ class CountersModel {
     this.endpoint = '/api/counters/users'
   }
 
-  async getUsersCount(filters = {}) {
+  setFilters(filters = {}) {
+    this.actions.setFilters(filters)
+    this.storage.setFilters({ ...this.state.filters, ...filters })
+  }
+
+  getFilters() {
+    const filters = this.storage.getFilters()
+    if (filters) {
+      this.actions.setFilters(filters)
+    }
+  }
+
+  async getUsersCount(integrations = []) {
+    const { filters } = this.state
+    const queryFilters = { ...filters, integrations }
     this.actions.setUsersCount({ isFetching: true, error: '' })
-    const query = encode(JSON.stringify(filters))
     try {
+      const json = JSON.stringify(queryFilters)
+      const query = encodeURIComponent(json)
       const response = await axios.get(`${this.endpoint}?filters=${query}`)
       const count = response.data.data.attributes.quantity
       this.actions.setUsersCount({ isFetching: false, count })
+      this.storage.setUsersCount(count)
     } catch (error) {
+      console.error(error)
       this.actions.setUsersCount({
         isFetching: false,
-        error: error.toString()
+        error
       })
     }
   }
@@ -39,9 +55,10 @@ class CountersModel {
       this.actions.setAllUsersCount({ isFetching: false, count })
       this.storage.setAllUsersCount(count)
     } catch (error) {
+      console.error(error)
       this.actions.setAllUsersCount({
         isFetching: false,
-        error: error.toString()
+        error
       })
     }
   }

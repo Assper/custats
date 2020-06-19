@@ -14,7 +14,15 @@ function setAllUsersCount(data = {}) {
   }
 }
 
+function setFilters(filters = {}) {
+  return {
+    type: types.SET_FILTERS,
+    payload: filters
+  }
+}
+
 export const actions = {
   setUsersCount,
-  setAllUsersCount
+  setAllUsersCount,
+  setFilters
 }

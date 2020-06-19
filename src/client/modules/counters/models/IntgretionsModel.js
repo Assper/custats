@@ -11,7 +11,7 @@ class IntegrationsModel {
     const error = this.validator.validateName(name, this.state.integrations)
     if (error) return console.error(error)
 
-    const data = { name, isEditing: false, isSelected: false }
+    const data = { name, isEditing: false, isSelected: true }
     const integrations = this.state.integrations.concat(data)
     this.actions.setIntegrations(integrations)
     this.storage.setIntegrations(integrations)

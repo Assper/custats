@@ -10,15 +10,17 @@ class CommonQuery {
   }
 
   async getIntegrationsIds({ names, publisher }) {
+    if (names && !names.length) return []
+
     const filters = {}
-    if (names && names.length) {
+    if (names) {
       const escapedNames = names.map(
         (name) => new RegExp(escapeRegexp(name), 'i')
       )
       filters.name = { $in: escapedNames }
     }
     if (publisher) {
-      filters.publisherId = { $exists: true, $ne: '' }
+      filters.publisherId = { $and: [{ $ne: '' }, { $ne: null }] }
     }
 
     const { database, collection } = this.config
@@ -28,8 +30,10 @@ class CommonQuery {
   }
 
   async getAuthorsIds({ integrationsIds }) {
+    if (integrationsIds && !integrationsIds.length) return []
+
     const filters = {}
-    if (integrationsIds && integrationsIds.length) {
+    if (integrationsIds) {
       filters.integrationId = { $in: integrationsIds }
     }
 

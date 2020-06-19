@@ -10,12 +10,16 @@ const initialState = {
     isFetching: false,
     error: '',
     count: 0
+  },
+  filters: {
+    imported: false,
+    publisher: false
   }
 }
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
-    case types.GET_USERS_COUNT:
+    case types.SET_USERS_COUNT:
       return {
         ...state,
         users: {
@@ -29,6 +33,15 @@ export function reducer(state = initialState, action) {
         ...state,
         allUsers: {
           ...state.allUsers,
+          ...action.payload
+        }
+      }
+
+    case types.SET_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
           ...action.payload
         }
       }
