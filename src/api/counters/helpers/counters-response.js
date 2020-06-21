@@ -1,8 +1,8 @@
 import { Response } from '@/helpers/response'
-import { CommonResponse } from '../../common/common-response'
+import { CommonResponse } from '@/api/common/common-response'
 
 export class CountersResponse extends CommonResponse {
-  static getUsersCount(id, quantity) {
+  getUsersCount(id, quantity) {
     return new Response()
       .data()
       .type('counter')

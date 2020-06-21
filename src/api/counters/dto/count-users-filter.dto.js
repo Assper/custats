@@ -3,7 +3,7 @@ import {
   Validated,
   IsIntegrationsFilter,
   IsDateRangeFilter
-} from '../../common/decorators/validation'
+} from '@/api/common/decorators/validation'
 
 @Validated
 class CountUsersFilterDto {

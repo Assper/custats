@@ -5,6 +5,8 @@ import {
   isDateString,
   registerDecorator
 } from 'class-validator'
+
+import { config } from '@/config'
 import { CommonResponse } from '../../common/common-response'
 
 export function Validated(Wrapped) {
@@ -17,7 +19,7 @@ export function Validated(Wrapped) {
           .map((error) => Object.values(error.constraints || {}))
           .flat()
 
-        throw CommonResponse.badRequest(...details)
+        throw new CommonResponse(config.response).badRequest(...details)
       }
 
       return target

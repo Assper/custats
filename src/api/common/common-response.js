@@ -1,29 +1,33 @@
 import { v1 as uuidv1 } from 'uuid'
-import { Response } from '../../helpers/response'
-import { HttpStatus, ErrorTitle } from '../../helpers/enums'
+import { Response } from '@/helpers/response'
+import { HttpStatus, ErrorTitle } from '@/helpers/enums'
 
 export class CommonResponse {
-  static internalError() {
+  constructor(config) {
+    this.config = config
+  }
+
+  internalError() {
     const error = {
       id: uuidv1(),
       title: ErrorTitle.InternalError,
       status: HttpStatus.InternalError
     }
 
-    return new Response().errors().push(error).build()
+    return new Response(this.config).errors().push(error).build()
   }
 
-  static notFound() {
+  notFound() {
     const error = {
       id: 'not-found',
       title: ErrorTitle.NotFound,
       status: HttpStatus.NotFound
     }
 
-    return new Response().errors().push(error).build()
+    return new Response(this.config).errors().push(error).build()
   }
 
-  static badRequest(...details) {
+  badRequest(...details) {
     const errors = details.map((detail) => ({
       id: uuidv1(),
       detail,
@@ -31,7 +35,7 @@ export class CommonResponse {
       status: HttpStatus.BadRequest
     }))
 
-    return new Response()
+    return new Response(this.config)
       .errors()
       .push(...errors)
       .build()

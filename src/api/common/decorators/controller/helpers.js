@@ -1,12 +1,6 @@
 import { config } from '@/config'
 import { router } from '@/api/router'
 
-export function getResponseConfig() {
-  return {
-    validateBeforeBuild: config.env === 'development'
-  }
-}
-
 export function setControllerRoutes(prototype, prefix, context) {
   Object.getOwnPropertyNames(prototype).forEach((key) => {
     const descriptor = Object.getOwnPropertyDescriptor(prototype, key)

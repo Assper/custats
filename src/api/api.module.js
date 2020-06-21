@@ -16,6 +16,6 @@ export class ApiModule {
 
   notFoundHandler(ctx) {
     ctx.status = HttpStatus.NotFound
-    ctx.body = CommonResponse.notFound()
+    ctx.body = new CommonResponse(this.config.response).notFound()
   }
 }

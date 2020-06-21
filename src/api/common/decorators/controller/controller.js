@@ -1,7 +1,6 @@
 import { Response } from '@/helpers/response'
 import {
   getMethodDescriptor,
-  getResponseConfig,
   getJsonHandler,
   setControllerRoutes
 } from './helpers'
@@ -11,7 +10,6 @@ export function Controller(prefix = '') {
     class extends Wrapped {
       constructor(...args) {
         super(...args)
-        this.response = new Response(getResponseConfig())
         setControllerRoutes(Wrapped.prototype, prefix, this)
       }
     }

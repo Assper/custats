@@ -1,4 +1,4 @@
-import { CommonQuery } from '../common/common-query'
+import { CommonQuery } from '@/api/common/common-query'
 
 class CountersRepository extends CommonQuery {
   async countAllUsers() {
@@ -15,6 +15,7 @@ class CountersRepository extends CommonQuery {
       publisher
     })
     const authorsIds = await this.getAuthorsIds({ integrationsIds })
+    if (!authorsIds.length) return 0
 
     const filter = { uuid: { $in: authorsIds } }
     if (imported) {

@@ -68,10 +68,10 @@ export function CountersForm(props = {}) {
     <form onSubmit={(e) => e.preventDefault()}>
       {users.isFetching && <CircularProgress />}
       {!users.isFetching && <Typography type="h3">Counted Users: {users.count}</Typography>}
-      {users.error && <Typography type="h3" color="error">All Users: {users.error}</Typography>}
+      {users.error && <Typography type="h3" color="error">{users.error}</Typography>}
 
       {allUsers.isFetching && <CircularProgress />}
-      {!allUsers.isFetching && <Typography type="h3">{allUsers.count}</Typography>}
+      {!allUsers.isFetching && <Typography type="h3">All Users: {allUsers.count}</Typography>}
       {allUsers.error && <Typography type="h3" color="error">{allUsers.error}</Typography>}
       <FormGroup row>
         <AddItemField onItemAdd={handleAddItem} />
