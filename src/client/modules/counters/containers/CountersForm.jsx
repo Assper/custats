@@ -53,7 +53,8 @@ export function CountersForm(props = {}) {
 
   useEffect(() => {
     intsModel.getIntegrations()
-    countsModel.getAllUsersCount()
+    countsModel.getAllUsersCount(true)
+    countsModel.getUsersCount([], true)
     countsModel.getFilters()
   }, [])
 

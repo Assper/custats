@@ -9,6 +9,11 @@ class CountersModel {
     this.endpoint = '/api/counters/users'
   }
 
+  getCounterFromStorage(getMethod, setMethod) {
+    const count = this.storage[getMethod]() || 0
+    this.actions[setMethod]({ isFetching: false, count })
+  }
+
   setFilters(filters = {}) {
     this.actions.setFilters(filters)
     this.storage.setFilters({ ...this.state.filters, ...filters })
@@ -21,7 +26,11 @@ class CountersModel {
     }
   }
 
-  async getUsersCount(integrations = []) {
+  async getUsersCount(integrations = [], useStorage = false) {
+    if (useStorage) {
+      return this.getCounterFromStorage('getUsersCount', 'setUsersCount')
+    }
+
     const { filters } = this.state
     const queryFilters = { ...filters, integrations }
     this.actions.setUsersCount({ isFetching: true, error: '' })
@@ -36,16 +45,14 @@ class CountersModel {
       console.error(error)
       this.actions.setUsersCount({
         isFetching: false,
-        error
+        error: error.toString()
       })
     }
   }
 
-  async getAllUsersCount() {
-    const count = this.storage.getAllUsersCount()
-    if (count) {
-      this.actions.setAllUsersCount({ isFetching: false, count })
-      return
+  async getAllUsersCount(useStorage = false) {
+    if (useStorage) {
+      return this.getCounterFromStorage('getAllUsersCount', 'setAllUsersCount')
     }
 
     this.actions.setAllUsersCount({ isFetching: true, error: '' })
@@ -58,7 +65,7 @@ class CountersModel {
       console.error(error)
       this.actions.setAllUsersCount({
         isFetching: false,
-        error
+        error: error.toString()
       })
     }
   }
