@@ -15,6 +15,7 @@ export function IntegrationItem({ integration, onEdit, onDelete, onSelect, onCan
         />
       ) : (
         <IntegrationItemDefault
+          selected={integration.isSelected}
           name={integration.name}
           onEdit={onEdit}
           onDelete={onDelete}

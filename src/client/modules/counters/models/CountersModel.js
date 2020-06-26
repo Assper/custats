@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { Model } from '@/client/common/decorators/model'
+import { CountersError } from '../helpers/CountersError'
 
 @Model
 class CountersModel {
@@ -41,11 +42,11 @@ class CountersModel {
       const count = response.data.data.attributes.quantity
       this.actions.setUsersCount({ isFetching: false, count })
       this.storage.setUsersCount(count)
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      const error = new CountersError(err, true)
       this.actions.setUsersCount({
         isFetching: false,
-        error: error.toString()
+        error: error.getMessage()
       })
     }
   }
@@ -57,15 +58,15 @@ class CountersModel {
 
     this.actions.setAllUsersCount({ isFetching: true, error: '' })
     try {
-      const response = await axios.get(`${this.endpoint}/all`)
+      const response = await axios.getUri(`${this.endpoint}/all`)
       const count = response.data.data.attributes.quantity
       this.actions.setAllUsersCount({ isFetching: false, count })
       this.storage.setAllUsersCount(count)
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      const error = new CountersError(err, true)
       this.actions.setAllUsersCount({
         isFetching: false,
-        error: error.toString()
+        error: error.getMessage()
       })
     }
   }

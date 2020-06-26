@@ -1,9 +1,17 @@
-import React from 'react'
-import { List } from '@material-ui/core'
+import React, { Fragment } from 'react'
+import { List, FormControlLabel, Checkbox } from '@material-ui/core'
 
 import { IntegrationItem } from './IntegrationItem'
 
-export function IntegrationsList({ integrations, onEdit, onDelete, onSelect, onCancel, onConfirm }) {
+export function IntegrationsList({
+  integrations,
+  onEdit,
+  onDelete,
+  onSelect,
+  onSelectAll,
+  onCancel,
+  onConfirm
+}) {
   const items = integrations.map((integration, i) => (
     <IntegrationItem
       key={integration.name + i}
@@ -16,5 +24,19 @@ export function IntegrationsList({ integrations, onEdit, onDelete, onSelect, onC
     />
   ))
 
-  return <List>{items}</List>
+  return (
+    <Fragment>
+      <FormControlLabel
+        control={
+          <Checkbox
+            onClick={(e) => onSelectAll(e.target)}
+            name="select-all"
+            color="primary"
+          />
+        }
+        label="Select All"
+      />
+      <List>{items}</List>
+    </Fragment>
+  )
 }

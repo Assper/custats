@@ -111,6 +111,7 @@ export function CountersForm(props = {}) {
         onEdit={(_, i) => intsModel.edit(i)}
         onDelete={(_, i) => intsModel.delete(i)}
         onSelect={({ isSelected }, i) => intsModel.select(!isSelected, i)}
+        onSelectAll={({ checked }) => intsModel.selectAll(checked)}
         onCancel={(_, i) => intsModel.editCancel(i)}
         onConfirm={({ name }, i) => intsModel.editConfirm(name, i)}
       />
