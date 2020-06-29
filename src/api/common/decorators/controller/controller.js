@@ -1,8 +1,8 @@
-import { Response } from '@/helpers/response'
 import {
   getMethodDescriptor,
   getJsonHandler,
-  setControllerRoutes
+  setControllerRoutes,
+  setMiddlewareDescriptor
 } from './helpers'
 
 export function Controller(prefix = '') {
@@ -13,6 +13,11 @@ export function Controller(prefix = '') {
         setControllerRoutes(Wrapped.prototype, prefix, this)
       }
     }
+}
+
+export function Middleware(middleware) {
+  return (target, property, descriptor) =>
+    setMiddlewareDescriptor(middleware, descriptor)
 }
 
 export function Json(target, property, descriptor) {

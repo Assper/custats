@@ -4,6 +4,11 @@ export const config = {
   response: {
     validateBeforeBuild: process.env.NODE_ENV === 'development'
   },
+  auth: {
+    googleId: process.env.GOOGLE_ID,
+    googleSecret: process.env.GOOGLE_SECRET,
+    callbackURL: `${process.env.ENV_URL}:${process.env.PORT}/api/auth/callback`
+  },
   db: {
     url: process.env.MONGO_DB,
     database: {
