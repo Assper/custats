@@ -58,7 +58,7 @@ class CountersModel {
 
     this.actions.setAllUsersCount({ isFetching: true, error: '' })
     try {
-      const response = await axios.getUri(`${this.endpoint}/all`)
+      const response = await axios.get(`${this.endpoint}/all`)
       const count = response.data.data.attributes.quantity
       this.actions.setAllUsersCount({ isFetching: false, count })
       this.storage.setAllUsersCount(count)

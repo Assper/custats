@@ -1,12 +1,14 @@
 import React, { useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
+import { Refresh } from '@material-ui/icons'
 import {
   Typography,
   CircularProgress,
   Button,
   Checkbox,
   FormGroup,
-  FormControlLabel
+  FormControlLabel,
+  IconButton
 } from '@material-ui/core'
 
 import { useActions } from '@/client/common/hooks/useActions'
@@ -58,6 +60,7 @@ export function CountersForm(props = {}) {
     countsModel.getFilters()
   }, [])
 
+  const handleAllUsersCount = useCallback(() => countsModel.getAllUsersCount())
   const handleAddItem = useCallback((input) => intsModel.add(input.value), [intsModel])
 
   const handleCount = useCallback(() => {
@@ -68,11 +71,22 @@ export function CountersForm(props = {}) {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       {users.isFetching && <CircularProgress />}
-      {!users.isFetching && <Typography type="h3">Counted Users: {users.count}</Typography>}
+      {!users.isFetching && (
+        <Typography type="h3">
+          Counted Users: {users.count}
+        </Typography>
+      )}
       {users.error && <Typography type="h3" color="error">{users.error}</Typography>}
 
       {allUsers.isFetching && <CircularProgress />}
-      {!allUsers.isFetching && <Typography type="h3">All Users: {allUsers.count}</Typography>}
+      {!allUsers.isFetching && (
+        <Typography type="h3">
+          All Users: {allUsers.count}
+          <IconButton aria-label="reresh counter" onClick={handleAllUsersCount}>
+            <Refresh color="primary" />
+          </IconButton>
+        </Typography>
+      )}
       {allUsers.error && <Typography type="h3" color="error">{allUsers.error}</Typography>}
       <FormGroup row>
         <AddItemField onItemAdd={handleAddItem} />
