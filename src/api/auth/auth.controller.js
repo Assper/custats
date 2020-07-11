@@ -15,7 +15,7 @@ class AuthController {
   @Json
   @Middleware([
     passport.initialize(),
-    passport.authenticate('google', { scope: ['profile'] })
+    passport.authenticate('google', { scope: ['email'] })
   ])
   @Get('/')
   auth() {}
@@ -27,11 +27,8 @@ class AuthController {
   ])
   @Get('/callback')
   async authCallback(ctx) {
-    ctx.cookies.set(
-      'accessToken',
-      ctx.query.code,
-      this.service.getCoockieOptions()
-    )
+    const { cookies, query } = ctx
+    this.service.setAccessToken(cookies, query.code)
     ctx.redirect('/counters')
   }
 }

@@ -38,3 +38,12 @@ export async function httpLogger(ctx, next) {
     `${ctx.request.method} ${ctx.status} - ${ctx.request.url} (duration: ${end}ms)`
   )
 }
+
+export async function authGuard(ctx, next) {
+  const token = ctx.cookies.get('accessToken')
+  if (token) return next()
+  throw new Response()
+    .errors()
+    .push({ title: ErrorTitle.Unauthorized, status: HttpStatus.Unauthorized })
+    .build()
+}

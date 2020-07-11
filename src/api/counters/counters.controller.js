@@ -1,5 +1,11 @@
 import { HttpStatus } from '@/helpers/enums'
-import { Get, Controller, Json } from '@/api/common/decorators/controller'
+import { authGuard } from '@/helpers/middlewares'
+import {
+  Get,
+  Controller,
+  Json,
+  Middleware
+} from '@/api/common/decorators/controller'
 
 import { CountUsersFilterDto } from './dto/count-users-filter.dto'
 import { getObjectFromQueryOrReject } from './helpers/utils'
@@ -12,6 +18,7 @@ class CountersController {
   }
 
   @Json
+  @Middleware(authGuard)
   @Get('/users/all')
   async countAllUsers(ctx) {
     const users = await this.service.countAllUsers()
@@ -20,6 +27,7 @@ class CountersController {
   }
 
   @Json
+  @Middleware(authGuard)
   @Get('/users')
   async countUsers(ctx) {
     const { filters: encode } = ctx.query
