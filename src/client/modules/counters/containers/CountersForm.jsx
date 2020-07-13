@@ -5,9 +5,7 @@ import {
   Typography,
   CircularProgress,
   Button,
-  Checkbox,
   FormGroup,
-  FormControlLabel,
   IconButton
 } from '@material-ui/core'
 
@@ -21,8 +19,12 @@ import { StorageManager } from '../helpers/StorageManager'
 import { IntegrationsValidator } from '../helpers/IntegrationsValidator'
 import { CountersModel } from '../models/CountersModel'
 import { IntegrationsModel } from '../models/IntgretionsModel'
-import { AddItemField } from '../components/AddItemField'
-import { IntegrationsList } from '../components/IntegrationsList'
+
+import {
+  AddItemField,
+  FilterCheckbox,
+  IntegrationsList
+} from '../components'
 
 const storage = new StorageManager()
 const validator = new IntegrationsValidator()
@@ -90,27 +92,15 @@ export function CountersForm(props = {}) {
       {allUsers.error && <Typography type="h3" color="error">{allUsers.error}</Typography>}
       <FormGroup row>
         <AddItemField onItemAdd={handleAddItem} />
-        <FormControlLabel
+        <FilterCheckbox
           label="Imported"
-          control={
-            <Checkbox
-              checked={filters.imported}
-              onChange={() => countsModel.setFilters({ imported: !filters.imported })}
-              name="imported"
-              color="primary"
-            />
-          }
+          checked={filters.imported}
+          onChange={() => countsModel.setFilters({ imported: !filters.imported })}
         />
-        <FormControlLabel
+        <FilterCheckbox
           label="Publisher"
-          control={
-            <Checkbox
-              checked={filters.publisher}
-              onChange={() => countsModel.setFilters({ publisher: !filters.publisher })}
-              name="publisher"
-              color="primary"
-            />
-          }
+          checked={filters.publisher}
+          onChange={() => countsModel.setFilters({ publisher: !filters.publisher })}
         />
         <Button
           onClick={() => !users.isFetching && handleCount()}
