@@ -1,9 +1,11 @@
 import passport from 'koa-passport'
+import { authGuard } from '@/helpers/middlewares'
 import {
   Controller,
   Get,
   Json,
-  Middleware
+  Middleware,
+  Post
 } from '@/api/common/decorators/controller'
 
 @Controller('/auth')
@@ -30,6 +32,14 @@ class AuthController {
     const { cookies, query } = ctx
     this.service.setAccessToken(cookies, query.code)
     ctx.redirect('/counters')
+  }
+
+  @Json
+  @Middleware(authGuard)
+  @Post('/logout')
+  async logout(ctx) {
+    this.service.removeAccessToken(ctx.cookies)
+    ctx.body = {}
   }
 }
 

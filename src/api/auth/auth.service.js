@@ -26,4 +26,8 @@ export class AuthService {
   setRefreshToken(cookies, token) {
     this.setToken(cookies, token, this.tokens.refresh)
   }
+
+  removeAccessToken(cookies) {
+    this.setToken(cookies, null, this.tokens.access)
+  }
 }

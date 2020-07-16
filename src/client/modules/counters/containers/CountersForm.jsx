@@ -1,12 +1,8 @@
 import React, { useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { Refresh } from '@material-ui/icons'
 import {
-  Typography,
-  CircularProgress,
   Button,
-  FormGroup,
-  IconButton
+  FormGroup
 } from '@material-ui/core'
 
 import { useActions } from '@/client/common/hooks/useActions'
@@ -21,9 +17,9 @@ import { CountersModel } from '../models/CountersModel'
 import { IntegrationsModel } from '../models/IntgretionsModel'
 
 import {
-  AddItemField,
   FilterCheckbox,
-  IntegrationsList
+  IntegrationsList,
+  CountsBar
 } from '../components'
 
 const storage = new StorageManager()
@@ -72,26 +68,13 @@ export function CountersForm(props = {}) {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      {users.isFetching && <CircularProgress />}
-      {!users.isFetching && (
-        <Typography type="h3">
-          Counted Users: {users.count}
-        </Typography>
-      )}
-      {users.error && <Typography type="h3" color="error">{users.error}</Typography>}
-
-      {allUsers.isFetching && <CircularProgress />}
-      {!allUsers.isFetching && (
-        <Typography type="h3">
-          All Users: {allUsers.count}
-          <IconButton aria-label="reresh counter" onClick={handleAllUsersCount}>
-            <Refresh color="primary" />
-          </IconButton>
-        </Typography>
-      )}
-      {allUsers.error && <Typography type="h3" color="error">{allUsers.error}</Typography>}
+      <CountsBar
+        users={users}
+        allUsers={allUsers}
+        onItemAdd={handleAddItem}
+        onAllUsersCount={handleAllUsersCount}
+      />
       <FormGroup row>
-        <AddItemField onItemAdd={handleAddItem} />
         <FilterCheckbox
           label="Imported"
           checked={filters.imported}
