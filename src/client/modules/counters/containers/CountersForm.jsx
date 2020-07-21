@@ -1,9 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import {
-  Button,
-  FormGroup
-} from '@material-ui/core'
 
 import { useActions } from '@/client/common/hooks/useActions'
 import { useModel } from '@/client/common/hooks/useModel'
@@ -17,9 +13,9 @@ import { CountersModel } from '../models/CountersModel'
 import { IntegrationsModel } from '../models/IntgretionsModel'
 
 import {
-  FilterCheckbox,
+  CountsBar,
   IntegrationsList,
-  CountsBar
+  IntegrationsTopBar
 } from '../components'
 
 const storage = new StorageManager()
@@ -74,31 +70,18 @@ export function CountersForm(props = {}) {
         onItemAdd={handleAddItem}
         onAllUsersCount={handleAllUsersCount}
       />
-      <FormGroup row>
-        <FilterCheckbox
-          label="Imported"
-          checked={filters.imported}
-          onChange={() => countsModel.setFilters({ imported: !filters.imported })}
-        />
-        <FilterCheckbox
-          label="Publisher"
-          checked={filters.publisher}
-          onChange={() => countsModel.setFilters({ publisher: !filters.publisher })}
-        />
-        <Button
-          onClick={() => !users.isFetching && handleCount()}
-          variant="contained"
-          color="primary"
-        >
-          Count
-        </Button>
-      </FormGroup>
+      <IntegrationsTopBar
+        filters={filters}
+        onImportFilter={() => countsModel.setFilters({ imported: !filters.imported })}
+        onPublisherFilter={() => countsModel.setFilters({ publisher: !filters.publisher })}
+        onCount={() => !users.isFetching && handleCount()}
+        onSelectAll={({ checked }) => intsModel.selectAll(checked)}
+      />
       <IntegrationsList
         integrations={integrations}
         onEdit={(_, i) => intsModel.edit(i)}
         onDelete={(_, i) => intsModel.delete(i)}
         onSelect={({ isSelected }, i) => intsModel.select(!isSelected, i)}
-        onSelectAll={({ checked }) => intsModel.selectAll(checked)}
         onCancel={(_, i) => intsModel.editCancel(i)}
         onConfirm={({ name }, i) => intsModel.editConfirm(name, i)}
       />
