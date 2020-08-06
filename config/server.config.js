@@ -17,7 +17,10 @@ const server = {
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
+    alias: {
+      '@': path.resolve(__dirname, '../src')
+    }
   },
   module: {
     rules: [

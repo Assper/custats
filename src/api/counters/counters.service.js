@@ -1,7 +1,13 @@
 export class CountersService {
-  getUsersCount () {
-    return {
-      users: 0
-    }
+  constructor(repository) {
+    this.repository = repository
+  }
+
+  countAllUsers() {
+    return this.repository.countAllUsers()
+  }
+
+  countUsers(countUsersFilterDto) {
+    return this.repository.countUsers({ ...countUsersFilterDto })
   }
 }
