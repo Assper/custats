@@ -25,6 +25,7 @@ export function CountersForm(props = {}) {
   const state = useSelector(state => state)
   const countsActions = useActions(countersActions)
   const intsActions = useActions(integrationsActions)
+
   const countsModel = useModel(CountersModel, [
     {
       ...props,
@@ -44,9 +45,6 @@ export function CountersForm(props = {}) {
     validator
   ])
 
-  const { allUsers, users, filters } = state[COUNTERS_NAME]
-  const { integrations } = state[INTEGRATIONS_NAME]
-
   useEffect(() => {
     intsModel.getIntegrations()
     countsModel.getAllUsersCount(true)
@@ -54,9 +52,10 @@ export function CountersForm(props = {}) {
     countsModel.getFilters()
   }, [])
 
+  const { allUsers, users, filters } = state[COUNTERS_NAME]
+  const { integrations } = state[INTEGRATIONS_NAME]
   const handleAllUsersCount = useCallback(() => countsModel.getAllUsersCount())
   const handleAddItem = useCallback((input) => intsModel.add(input.value), [intsModel])
-
   const handleCount = useCallback(() => {
     const names = integrations.reduce((acc, { name, isSelected }) => isSelected ? acc.concat(name) : acc, [])
     countsModel.getUsersCount(names)

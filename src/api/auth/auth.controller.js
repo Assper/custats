@@ -29,8 +29,9 @@ class AuthController {
   ])
   @Get('/callback')
   async authCallback(ctx) {
-    const { cookies, query } = ctx
-    this.service.setAccessToken(cookies, query.code)
+    const { cookies } = ctx
+    const { user } = ctx.req
+    this.service.setAccessToken(cookies, user.access)
     ctx.redirect('/counters')
   }
 

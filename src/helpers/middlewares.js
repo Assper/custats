@@ -1,3 +1,4 @@
+import { config } from '@/config'
 import { logger } from './logger'
 import { Response } from './response'
 import { HttpStatus, ErrorTitle } from './enums'
@@ -41,9 +42,20 @@ export async function httpLogger(ctx, next) {
 
 export async function authGuard(ctx, next) {
   const token = ctx.cookies.get('accessToken')
-  if (token) return next()
-  throw new Response()
-    .errors()
-    .push({ title: ErrorTitle.Unauthorized, status: HttpStatus.Unauthorized })
-    .build()
+  try {
+    const data = await config.auth.googleClient.getTokenInfo(token)
+    if (!config.auth.trustedEmails.includes(data.email)) {
+      throw new Response().errors().push({
+        title: ErrorTitle.AccessDenied,
+        status: HttpStatus.AccessDenied
+      })
+    }
+
+    return next()
+  } catch (e) {
+    throw new Response()
+      .errors()
+      .push({ title: ErrorTitle.Unauthorized, status: HttpStatus.Unauthorized })
+      .build()
+  }
 }

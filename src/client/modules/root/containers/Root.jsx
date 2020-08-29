@@ -1,16 +1,17 @@
 import React from 'react'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { withUserData } from '../../../common/hocs/withUserData'
 import { Menu } from '../components/Menu'
+import { AuthProvider } from '@/client/modules/auth'
 
 const theme = createMuiTheme()
-const ContaineredMenu = withUserData(Menu)
 
 export function Root({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <ContaineredMenu />
-      {children}
+      <AuthProvider isLogged={false}>
+        <Menu />
+        {children}
+      </AuthProvider>
     </ThemeProvider>
   )
 }

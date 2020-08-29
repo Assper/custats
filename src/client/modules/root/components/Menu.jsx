@@ -5,9 +5,9 @@ import { grey } from '@material-ui/core/colors'
 import {
   AppBar,
   Toolbar,
-  Button,
   Typography
 } from '@material-ui/core'
+import { AuthStatus } from './AuthStatus'
 
 const useStyles = makeStyles({
   link: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   }
 })
 
-export function Menu({ isLogged, login, logout }) {
+export function Menu() {
   const classes = useStyles()
 
   return (
@@ -36,11 +36,7 @@ export function Menu({ isLogged, login, logout }) {
           <Link to="/import" className={classes.link}>Import</Link>
         </Typography>
         <Typography>
-          {isLogged ? (
-            <Button className={classes.link} onClick={logout}>Logout</Button>
-          ) : (
-            <Button className={classes.link} onClick={login}>Login</Button>
-          )}
+          <AuthStatus className={classes.link} />
         </Typography>
       </Toolbar>
     </AppBar>
