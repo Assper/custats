@@ -22,6 +22,9 @@ export function Page() {
             <Route path="/counters">
               <Counters />
             </Route>
+            <Route path="/import">
+              <div>Import</div>
+            </Route>
             <Route path="/">
               <Redirect to="/counters" />
             </Route>

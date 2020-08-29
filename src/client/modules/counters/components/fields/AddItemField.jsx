@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react'
-import { Input, InputAdornment } from '@material-ui/core'
+import { Input, InputAdornment, IconButton } from '@material-ui/core'
 import { AddCircle } from '@material-ui/icons'
 
 export function AddItemField({ value, onChange, onItemAdd }) {
@@ -13,6 +13,7 @@ export function AddItemField({ value, onChange, onItemAdd }) {
   return (
     <Input
       inputRef={ref}
+      color="primary"
       onChange={onChange}
       placeholder="Integration name"
       defaultValue={value || ''}
@@ -22,7 +23,9 @@ export function AddItemField({ value, onChange, onItemAdd }) {
           onClick={handleAddItem}
           position="end"
         >
-          <AddCircle />
+          <IconButton aria-label="add integration">
+            <AddCircle color="primary" />
+          </IconButton>
         </InputAdornment>
       }
     />

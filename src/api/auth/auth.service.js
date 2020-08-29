@@ -4,7 +4,7 @@ export class AuthService {
     refresh: 'refreshToken'
   })
 
-  getCoockieOptions() {
+  getCookieOptions() {
     return {
       expires: 0,
       httpOnly: true,
@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   setToken(cookies, token, type) {
-    cookies.set(type, token, this.getCoockieOptions())
+    cookies.set(type, token, this.getCookieOptions())
   }
 
   setAccessToken(cookies, token) {
